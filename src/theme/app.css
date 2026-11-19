@@ -1621,3 +1621,429 @@
   .model-presets h2 { grid-column: auto; }
   .model-coordinate { font-size: 8px; }
 }
+
+.lab-app {
+  display: grid;
+  width: 100%;
+  height: 100dvh;
+  min-height: 640px;
+  grid-template-rows: 56px minmax(0, 1fr);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 48% 45%, rgb(22 46 72 / 0.25), transparent 54%),
+    var(--ink);
+}
+
+.lab-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgb(142 160 184 / 0.12);
+  background: rgb(7 11 20 / 0.78);
+  backdrop-filter: blur(20px);
+}
+
+.lab-breadcrumb { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--text-muted); font-size: 11px; }
+.lab-breadcrumb a { display: inline-flex; align-items: center; gap: 5px; color: var(--text-secondary); text-decoration: none; }
+.lab-breadcrumb strong { overflow: hidden; color: var(--text-primary); font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.lab-category { margin-left: auto; color: var(--text-secondary); font-size: 10px; }
+
+.lab-workspace {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(220px, 260px) minmax(320px, 1fr) minmax(255px, 310px);
+  gap: 11px;
+  padding: 11px;
+}
+
+.lab-controls,
+.lab-information {
+  min-height: 0;
+  overflow: auto;
+  scrollbar-color: #29394e transparent;
+  scrollbar-width: thin;
+}
+
+.lab-controls {
+  padding: 15px;
+  border: 1px solid rgb(142 160 184 / 0.13);
+  border-radius: var(--radius-panel);
+  background: var(--surface-dense);
+  backdrop-filter: blur(24px);
+}
+
+.lab-kicker,
+.lab-section-label { color: var(--text-muted); font-size: 9px; letter-spacing: 0.09em; text-transform: uppercase; }
+.lab-controls h1 { margin: 8px 0 0; font-size: clamp(19px, 1.6vw, 25px); font-weight: 540; letter-spacing: -0.035em; line-height: 1.12; }
+.lab-description { margin: 10px 0 16px; color: var(--text-secondary); font-size: 11px; line-height: 1.55; }
+.lab-control-list { display: grid; gap: 13px; }
+.lab-control-group { display: grid; gap: 8px; }
+.lab-control-group + .lab-control-group { padding-top: 12px; border-top: 1px solid rgb(142 160 184 / 0.12); }
+.lab-control-group h2 { margin: 0; color: var(--text-secondary); font-size: 10px; font-weight: 550; }
+.lab-field { display: grid; gap: 5px; color: var(--text-secondary); font-size: 10px; }
+.lab-field__heading { display: flex; justify-content: space-between; gap: 8px; }
+.lab-field__heading output { color: var(--text-primary); font: 10px "Geist Mono Variable", monospace; }
+.lab-field input[type="range"] { width: 100%; accent-color: var(--cyan); }
+.lab-select,
+.lab-number-input { width: 100%; min-height: 32px; padding: 0 8px; border: 1px solid rgb(142 160 184 / 0.18); border-radius: var(--radius-control); background: #0b1220; color: var(--text-primary); font-size: 10px; }
+.lab-button-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.lab-button,
+.lab-scene-tools button {
+  min-height: 29px;
+  padding: 0 9px;
+  border: 1px solid rgb(142 160 184 / 0.18);
+  border-radius: var(--radius-control);
+  background: rgb(255 255 255 / 0.025);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 9px;
+  transition: background var(--duration-ui) var(--ease-ui), border-color var(--duration-ui) var(--ease-ui), color var(--duration-ui) var(--ease-ui);
+}
+.lab-button:hover,
+.lab-scene-tools button:hover { border-color: rgb(34 211 238 / 0.35); color: var(--text-primary); }
+.lab-button.is-selected,
+.lab-button[aria-pressed="true"],
+.lab-scene-tools button[aria-pressed="true"] { border-color: rgb(34 211 238 / 0.4); background: rgb(34 211 238 / 0.08); color: var(--cyan); }
+.lab-button:active { transform: scale(0.98); }
+.lab-charge-row { display: grid; gap: 6px; padding: 8px; border: 1px solid rgb(142 160 184 / 0.11); border-radius: 10px; background: rgb(255 255 255 / 0.018); }
+.lab-charge-row__header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lab-charge-row__header strong { color: var(--text-primary); font-size: 10px; font-weight: 520; }
+.lab-charge-row__header button { padding: 2px 6px; border: 0; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 9px; }
+.lab-charge-row__header button:hover { color: var(--error); }
+
+.lab-stage { display: grid; min-width: 0; min-height: 0; grid-template-rows: 35px minmax(0, 1fr) 40px; gap: 7px; }
+.lab-scene-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.lab-scene-tools button { min-height: 27px; padding: 0 8px; }
+.lab-scene { position: relative; min-height: 280px; overflow: hidden; border: 1px solid rgb(142 160 184 / 0.13); border-radius: var(--radius-panel); background: #080e19; }
+.lab-scene canvas { display: block; width: 100%; height: 100%; }
+.lab-playback { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.lab-playback .play-button { width: 31px; height: 31px; }
+.lab-playback .icon-button { width: 30px; height: 30px; }
+.lab-playback select { width: 61px; height: 28px; padding: 0 5px; font-size: 9px; }
+.lab-time-control { flex: 1; min-width: 60px; display: flex; align-items: center; }
+.lab-time-control input { width: 100%; accent-color: var(--cyan); }
+.lab-time { color: var(--text-secondary); font-size: 9px; white-space: nowrap; }
+.lab-playback .text-button { display: inline-flex; align-items: center; gap: 3px; margin-left: 2px; }
+
+.lab-information { display: grid; align-content: start; gap: 8px; }
+.lab-mode-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 3px; border: 1px solid rgb(142 160 184 / 0.12); border-radius: 11px; background: rgb(10 16 28 / 0.82); }
+.lab-mode-tabs button { min-height: 30px; border: 0; border-radius: 8px; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 9px; }
+.lab-mode-tabs button.is-selected { background: rgb(34 211 238 / 0.1); color: var(--cyan); }
+.lab-info-panel { padding: 12px; border: 1px solid rgb(142 160 184 / 0.12); border-radius: var(--radius-panel); background: var(--surface-dense); backdrop-filter: blur(24px); }
+.lab-measurements { display: grid; gap: 0; margin: 8px 0 0; }
+.lab-measurements div { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgb(142 160 184 / 0.08); }
+.lab-measurements div:last-child { border-bottom: 0; padding-bottom: 0; }
+.lab-measurements dt { color: var(--text-secondary); font-size: 9px; }
+.lab-measurements dd { margin: 0; color: var(--text-primary); font: 9px "Geist Mono Variable", monospace; text-align: right; }
+.lab-equation { min-height: 28px; margin-top: 8px; overflow-x: auto; color: var(--text-primary); font-size: 12px; }
+.lab-learning-content h2 { margin: 5px 0 7px; font-size: 12px; font-weight: 540; }
+.lab-learning-content p { margin: 0; color: var(--text-secondary); font-size: 10px; line-height: 1.55; }
+.lab-learning-content p + p { margin-top: 7px; }
+.lab-assumptions { padding: 10px 12px; border: 1px solid rgb(142 160 184 / 0.1); border-radius: 12px; color: var(--text-secondary); font-size: 9px; line-height: 1.5; }
+.lab-assumptions summary { color: var(--text-primary); cursor: pointer; }
+.lab-assumptions p { margin: 8px 0 0; }
+.lab-info-choice { display: grid; gap: 5px; margin-top: 8px; }
+.lab-info-choice button { padding: 7px 8px; border: 1px solid rgb(142 160 184 / 0.14); border-radius: 8px; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 9px; text-align: left; }
+.lab-info-choice button.is-correct { border-color: rgb(52 211 153 / 0.45); color: var(--success); }
+.lab-info-choice button.is-wrong { border-color: rgb(251 113 133 / 0.4); color: var(--error); }
+
+@media (max-width: 1120px) {
+  .lab-workspace { grid-template-columns: minmax(210px, 250px) minmax(300px, 1fr); }
+  .lab-information { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; }
+  .lab-mode-tabs { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  .lab-app { height: auto; min-height: 100dvh; grid-template-rows: 54px auto; overflow: visible; }
+  .lab-header { position: sticky; top: 0; gap: 10px; padding: 0 11px; }
+  .lab-category { display: none; }
+  .lab-workspace { grid-template-columns: minmax(0, 1fr); padding: 8px; }
+  .lab-stage { min-height: 47dvh; grid-row: 1; grid-template-rows: auto minmax(260px, 1fr) auto; }
+  .lab-controls { grid-row: 2; overflow: visible; }
+  .lab-information { grid-column: auto; grid-row: 3; grid-template-columns: minmax(0, 1fr); }
+  .lab-mode-tabs { grid-column: auto; }
+  .lab-playback { flex-wrap: wrap; padding: 3px 0; }
+  .lab-time-control { min-width: 80px; }
+}
+
+@media (max-width: 460px) {
+  .lab-header .brand-lockup { gap: 6px; font-size: 12px; }
+  .lab-breadcrumb { font-size: 9px; }
+  .lab-breadcrumb > span,
+  .lab-breadcrumb strong { display: none; }
+  .lab-controls { padding: 12px; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .lab-header,
+  .lab-controls,
+  .lab-info-panel { backdrop-filter: none; background: #0b1220; }
+}
+
+.catalog-labs {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+.catalog-section-heading {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 17px;
+}
+
+.catalog-section-heading h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 19px;
+  font-weight: 540;
+  letter-spacing: -0.035em;
+}
+
+.catalog-section-heading p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.catalog-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.catalog-lab-card {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid rgb(142 160 184 / 0.14);
+  border-radius: 16px;
+  background: rgb(10 16 28 / 0.78);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--duration-ui) ease, background var(--duration-ui) ease, transform var(--duration-ui) ease;
+}
+
+.catalog-lab-card:hover {
+  transform: translateY(-2px);
+  border-color: rgb(34 211 238 / 0.34);
+  background: rgb(14 23 38 / 0.92);
+}
+
+.catalog-lab-card:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.catalog-lab-card--wide {
+  grid-column: span 2;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  grid-template-rows: minmax(185px, 1fr);
+  align-items: stretch;
+}
+
+.catalog-lab-card--wide .lab-preview { height: 100%; min-height: 190px; }
+
+.catalog-lab-card__content {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 17px;
+}
+
+.catalog-lab-card__category {
+  color: var(--text-muted);
+  font-size: 9px;
+}
+
+.catalog-lab-card__content > strong {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.catalog-lab-card__description {
+  min-height: 30px;
+  color: var(--text-secondary);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.catalog-lab-card__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 5px;
+  color: var(--text-muted);
+  font: 9px "Geist Mono Variable", monospace;
+}
+
+.catalog-lab-card__footer > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--cyan);
+  font-family: "Geist Variable", sans-serif;
+}
+
+.catalog-section-heading--library { margin-bottom: 14px; }
+.catalog-section-heading--library h2 { font-size: 17px; }
+
+.lab-preview {
+  position: relative;
+  min-height: 142px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgb(30 55 79 / 0.55), transparent 70%),
+    #080e19;
+}
+
+.lab-preview::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgb(142 160 184 / 0.045) 1px, transparent 1px), linear-gradient(90deg, rgb(142 160 184 / 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+  content: "";
+}
+
+.preview-charge,
+.preview-particle,
+.preview-wire,
+.preview-wire-ring,
+.preview-compass,
+.preview-solenoid-field,
+.preview-solenoid-windings,
+.preview-solenoid-core,
+.preview-pole,
+.preview-cyclotron-dee,
+.preview-cyclotron-gap,
+.preview-cyclotron-orbit,
+.preview-cyclotron-particle,
+.preview-magnet,
+.preview-motor-coil,
+.preview-motor-shaft,
+.preview-induction-magnet,
+.preview-induction-coil,
+.preview-galvanometer,
+.preview-induction-wire,
+.preview-field,
+.preview-current-arrow,
+.preview-motor-force {
+  position: absolute;
+}
+
+.preview-field {
+  top: 50%;
+  left: 21%;
+  width: 58%;
+  height: 72%;
+  border: 1px solid rgb(34 211 238 / 0.58);
+  border-radius: 50%;
+  transform: translateY(-50%) rotate(-12deg);
+}
+
+.preview-field--electric-inner { left: 30%; width: 40%; height: 48%; border-color: rgb(96 165 250 / 0.66); }
+.preview-charge { z-index: 1; display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; font: 13px "Geist Mono Variable", monospace; }
+.preview-charge--positive { top: 50%; left: 25%; border: 1px solid rgb(251 191 36 / 0.7); background: #3b2e17; color: #FBBF24; transform: translate(-50%, -50%); }
+.preview-charge--negative { top: 50%; left: 75%; border: 1px solid rgb(96 165 250 / 0.7); background: #17283b; color: #60A5FA; transform: translate(-50%, -50%); }
+.preview-particle { top: 44%; left: 54%; width: 7px; height: 7px; border-radius: 50%; background: #E6EDF7; box-shadow: 0 0 10px rgb(230 237 247 / 0.5); animation: preview-particle-drift 2.8s ease-in-out infinite alternate; }
+
+.preview-wire { top: 13%; left: 50%; width: 9px; height: 74%; border: 1px solid rgb(255 255 255 / 0.28); border-radius: 8px; background: linear-gradient(90deg, #9b5836, #e5a56d, #9b5836); transform: translateX(-50%); }
+.preview-wire-ring { top: 50%; left: 50%; aspect-ratio: 1; border: 1px solid rgb(167 139 250 / 0.72); border-radius: 50%; transform: translate(-50%, -50%); }
+.preview-wire-ring--one { width: 68px; }
+.preview-wire-ring--two { width: 112px; border-color: rgb(167 139 250 / 0.4); }
+.preview-current-arrow { top: 17%; left: calc(50% + 15px); color: #FBBF24; font: 18px "Geist Mono Variable", monospace; animation: preview-current-flow 1s ease-in-out infinite alternate; }
+.preview-compass { top: 50%; left: 68%; display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid rgb(230 237 247 / 0.55); border-radius: 50%; background: #101a2a; transform: translateY(-50%); }
+.preview-compass i { width: 2px; height: 18px; background: linear-gradient(#FB7185 50%, #60A5FA 50%); transform: rotate(38deg); }
+
+.preview-solenoid-field { top: 50%; left: 19%; width: 62%; height: 25%; border: 1px solid rgb(167 139 250 / 0.64); border-radius: 50%; transform: translateY(-50%); }
+.preview-solenoid-windings { top: 27%; left: 23%; display: flex; width: 54%; height: 46%; justify-content: space-between; }
+.preview-solenoid-windings i { width: 5px; border: 1px solid #D18A55; border-radius: 50%; background: rgb(209 138 85 / 0.14); }
+.preview-solenoid-core { top: 46%; left: 24%; width: 52%; height: 8%; border: 1px solid rgb(142 160 184 / 0.72); border-radius: 4px; background: linear-gradient(90deg, #55677d, #9ba8b7, #55677d); }
+.preview-pole { top: 50%; color: #E6EDF7; font: 10px "Geist Mono Variable", monospace; transform: translateY(-50%); }
+.preview-pole--north { left: 12%; }
+.preview-pole--south { right: 12%; }
+
+.preview-cyclotron-dee { top: 22%; width: 35%; height: 56%; border: 2px solid rgb(96 165 250 / 0.76); background: rgb(59 130 246 / 0.09); }
+.preview-cyclotron-dee--left { left: 15%; border-right: 0; border-radius: 100% 0 0 100%; }
+.preview-cyclotron-dee--right { right: 15%; border-left: 0; border-radius: 0 100% 100% 0; }
+.preview-cyclotron-gap { top: 28%; left: 50%; width: 2px; height: 44%; background: #FBBF24; box-shadow: 0 0 12px rgb(251 191 36 / 0.28); transform: translateX(-50%); }
+.preview-cyclotron-orbit { top: 35%; left: 31%; width: 38%; height: 30%; border: 1px solid rgb(34 211 238 / 0.72); border-radius: 50%; }
+.preview-cyclotron-particle { top: 48%; left: 50%; width: 7px; height: 7px; border-radius: 50%; background: #E6EDF7; box-shadow: 0 0 8px rgb(34 211 238 / 0.8); animation: preview-cyclotron-particle 1.7s ease-in-out infinite alternate; }
+
+.preview-magnet { top: 22%; display: grid; width: 20%; height: 56%; place-items: center; color: #E6EDF7; font: 11px "Geist Mono Variable", monospace; }
+.preview-magnet--north { left: 15%; border-radius: 5px 0 0 5px; background: #9E2439; }
+.preview-magnet--south { right: 15%; border-radius: 0 5px 5px 0; background: #17527E; }
+.preview-motor-coil { top: 28%; left: 41%; width: 18%; height: 44%; border: 2px solid #D18A55; border-radius: 5px; transform-origin: center; animation: preview-motor-turn 4s ease-in-out infinite alternate; }
+.preview-motor-shaft { top: 17%; left: calc(50% - 1px); width: 2px; height: 66%; background: rgb(230 237 247 / 0.75); }
+.preview-motor-force { top: 13%; left: 53%; color: #FB7185; font: 15px "Geist Mono Variable", monospace; }
+
+.preview-induction-magnet { top: 39%; left: 18%; display: flex; width: 34%; height: 22%; overflow: hidden; border-radius: 4px; animation: preview-magnet-approach 2.8s ease-in-out infinite alternate; }
+.preview-induction-magnet i { display: grid; width: 50%; place-items: center; color: #E6EDF7; font: 9px "Geist Mono Variable", monospace; font-style: normal; }
+.preview-induction-magnet i:first-child { background: #17527E; }
+.preview-induction-magnet i:last-child { background: #9E2439; }
+.preview-induction-coil { top: 28%; left: 57%; width: 36px; height: 44%; border: 3px double #D18A55; border-radius: 50%; }
+.preview-galvanometer { top: 17%; left: 74%; width: 34px; height: 34px; border: 1px solid rgb(230 237 247 / 0.7); border-radius: 50%; background: #101a2a; }
+.preview-galvanometer i { position: absolute; top: 7px; left: 16px; width: 2px; height: 18px; background: #FB7185; transform: rotate(26deg); transform-origin: bottom; }
+.preview-induction-wire { top: 38%; left: 68%; width: 18%; height: 30%; border: 1px solid rgb(209 138 85 / 0.82); border-top: 0; border-radius: 0 0 24px 24px; }
+
+@keyframes preview-particle-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(12px, -7px); }
+}
+
+@keyframes preview-current-flow {
+  from { transform: translateY(3px); }
+  to { transform: translateY(-3px); }
+}
+
+@keyframes preview-cyclotron-particle {
+  from { transform: translateX(-13px); }
+  to { transform: translateX(13px); }
+}
+
+@keyframes preview-motor-turn {
+  from { transform: rotate(-18deg); }
+  to { transform: rotate(18deg); }
+}
+
+@keyframes preview-magnet-approach {
+  from { transform: translateX(-5px); }
+  to { transform: translateX(14px); }
+}
+
+.catalog-browser { scroll-margin-top: 18px; }
+
+@media (max-width: 760px) {
+  .catalog-lab-grid { gap: 9px; }
+  .catalog-lab-card--wide { min-height: 0; grid-column: span 2; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); grid-template-rows: minmax(155px, 1fr); }
+  .catalog-lab-card--wide .lab-preview { min-height: 155px; }
+  .catalog-lab-card__content { padding: 13px; }
+}
+
+@media (max-width: 520px) {
+  .catalog-labs { padding-bottom: 36px; }
+  .catalog-section-heading h2 { font-size: 17px; }
+  .catalog-lab-grid { grid-template-columns: minmax(0, 1fr); }
+  .catalog-lab-card--wide { grid-column: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .catalog-lab-card--wide .lab-preview { min-height: 142px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-lab-card,
+  .catalog-lab-card:hover { transition: none; transform: none; }
+  .preview-particle,
+  .preview-current-arrow,
+  .preview-cyclotron-particle,
+  .preview-motor-coil,
+  .preview-induction-magnet { animation: none; }
+}

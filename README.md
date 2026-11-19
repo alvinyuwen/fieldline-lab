@@ -32,6 +32,7 @@ The production output is static and written to `dist/`.
 - **Math and waves:** Fourier series, gradient and level surfaces, divergence and curl, standing waves, and Doppler shift.
 - **Upper-year models:** Lagrangian pendulum, Hamiltonian oscillator, Lorenz attractor, double pendulum, vacuum electromagnetic wave, infinite quantum well, and rectangular-barrier tunneling.
 - **Reference simulation:** a charged particle in a uniform magnetic field with circular and helical modes.
+- **Guided electromagnetism labs:** electric fields and charges, magnetic field around a wire, solenoids, a cyclotron, a DC motor, and Faraday-Lenz induction. Each has a dedicated 3D workspace, Explore/Learn/Challenge modes, live measurements, playback, and stated assumptions.
 
 Every model provides parameter bounds, SI-aware equations and readouts, presets, a prediction prompt, a challenge, and explicit assumptions. Conservative oscillator and pendulum models report numerical energy drift. Model parameters are encoded in shareable simulation URLs; visited/completed progress and rendering quality are stored locally in the browser.
 
@@ -44,6 +45,7 @@ Every model provides parameter bounds, SI-aware equations and readouts, presets,
 - [x] Searchable catalog with topic/level filters, shareable URLs, and local visited/completed progress.
 - [x] Fourier, vector-calculus, wave, and Doppler models.
 - [x] Lagrangian/Hamiltonian, chaotic, Maxwell-wave, and quantum models.
+- [x] Six guided electromagnetism experiments with distinct catalog previews and lazy-loaded 3D workspaces.
 - [x] Dark-only responsive interface, keyboard-accessible controls, reduced-motion/transparency behavior, rendering quality setting, and static deployment instructions.
 
 ## Deploying to Vercel
@@ -58,6 +60,7 @@ Run `npm run preview` to verify the production build locally before deploying.
 - Collisions use a central normal and user-set restitution. The 2D mode preserves tangential velocity but does not model finite-sized deformable bodies.
 - The Lorenz and double-pendulum models demonstrate deterministic chaos; their long-term pointwise trajectories are sensitive to numerical precision and initial conditions.
 - The quantum well and barrier are one-dimensional textbook models. Tunneling transmission uses the stationary rectangular-barrier formula; its plotted interior amplitude is a relative profile, not a normalized wavepacket-scattering solution.
+- The guided electromagnetism labs are idealized teaching models. In particular, the induction lab uses a point-dipole approximation for a finite bar magnet; close-range flux is not a precision model. The motor omits losses and back EMF, and the cyclotron is non-relativistic.
 - The WebGL renderer is code-split from the catalog, but its production chunk remains large (about 921 kB minified in the current build).
 - Local progress stays in this browser and is not synchronized between devices.
 - WebGL support is required for 3D scenes. Rendering quality can be lowered on constrained devices.

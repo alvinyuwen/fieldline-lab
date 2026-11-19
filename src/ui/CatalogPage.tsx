@@ -1,9 +1,13 @@
 import { ArrowRight, MagnifyingGlass } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
-import { simulationRegistry } from '../registry'
+import { laboratoryEntries, simulationRegistry } from '../registry'
 import { useSiteStore, type RenderQuality } from '../core/site-store'
+import { LabPreview, type LabPreviewKind } from './LabPreview'
 
 const levels = ['All levels', 'G12', 'Y1', 'Y2', 'Y3', 'Y4'] as const
+const previewKinds: readonly LabPreviewKind[] = ['electric', 'wire', 'solenoid', 'cyclotron', 'motor', 'induction']
+const laboratoryIds = new Set(laboratoryEntries.map((entry) => entry.id))
+const librarySimulations = simulationRegistry.filter((simulation) => !laboratoryIds.has(simulation.id))
 
 export function CatalogPage() {
   const [query, setQuery] = useState('')
@@ -13,10 +17,10 @@ export function CatalogPage() {
   const completed = useSiteStore((state) => state.completed)
   const quality = useSiteStore((state) => state.quality)
   const setQuality = useSiteStore((state) => state.setQuality)
-  const topics = useMemo(() => ['All topics', ...new Set(simulationRegistry.map((simulation) => simulation.category))], [])
+  const topics = useMemo(() => ['All topics', ...new Set(librarySimulations.map((simulation) => simulation.category))], [])
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase()
-    return simulationRegistry.filter((simulation) => (
+    return librarySimulations.filter((simulation) => (
       (topic === 'All topics' || simulation.category === topic)
       && (level === 'All levels' || simulation.levels.includes(level))
       && (!needle || `${simulation.title} ${simulation.description} ${simulation.category}`.toLowerCase().includes(needle))
@@ -55,7 +59,34 @@ export function CatalogPage() {
         </div>
       </section>
 
+      <section className="catalog-labs" aria-labelledby="catalog-labs-title">
+        <div className="catalog-section-heading">
+          <h2 id="catalog-labs-title">Six electromagnetism experiments</h2>
+          <p>Move charges, currents, magnets, and coils. Each experiment connects a 3D model to its governing physics.</p>
+        </div>
+        <div className="catalog-lab-grid">
+          {laboratoryEntries.map((lab, index) => (
+            <a className={`catalog-lab-card${index === 0 || index === laboratoryEntries.length - 1 ? ' catalog-lab-card--wide' : ''}`} href={`/?sim=${encodeURIComponent(lab.id)}`} key={lab.id}>
+              <LabPreview kind={previewKinds[index]} />
+              <span className="catalog-lab-card__content">
+                <span className="catalog-lab-card__category">{lab.category}</span>
+                <strong>{lab.title}</strong>
+                <span className="catalog-lab-card__description">{lab.subtitle}</span>
+                <span className="catalog-lab-card__footer">
+                  <span>{lab.levels.join(' / ')}</span>
+                  <span>Explore <ArrowRight size={15} aria-hidden="true" /></span>
+                </span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <section className="catalog-browser" aria-label="Simulation catalog">
+        <div className="catalog-section-heading catalog-section-heading--library">
+          <h2>All simulations</h2>
+          <p>Search the wider physics and mathematics library.</p>
+        </div>
         <div className="catalog-filters">
           <label className="catalog-search">
             <MagnifyingGlass size={17} aria-hidden="true" />

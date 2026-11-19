@@ -3,7 +3,7 @@ import { advancedPhysics, advancedSimulations } from '../src/sims/advanced'
 import { electromagnetismSimulations } from '../src/sims/electromagnetism'
 import { mathWaveSimulations } from '../src/sims/math-waves'
 import { mechanicsPhysics, mechanicsSimulations } from '../src/sims/mechanics'
-import { simulationRegistry } from '../src/registry'
+import { laboratoryEntries, simulationRegistry } from '../src/registry'
 import type { SimulationDefinition } from '../src/sims/types'
 
 const definitions: readonly SimulationDefinition[] = [
@@ -18,7 +18,7 @@ const defaults = (definition: SimulationDefinition) =>
 
 describe('simulation catalog models', () => {
   it('registers every Phase 2-6 model with valid defaults and finite samples', () => {
-    expect(simulationRegistry).toHaveLength(definitions.length + 1)
+    expect(simulationRegistry).toHaveLength(definitions.length + 1 + laboratoryEntries.length)
     expect(new Set(simulationRegistry.map((simulation) => simulation.id)).size).toBe(simulationRegistry.length)
 
     for (const definition of definitions) {
