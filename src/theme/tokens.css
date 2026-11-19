@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: "Geist Variable", "Geist", system-ui, sans-serif;
+
+  --ink: #070b14;
+  --ink-raised: #0b1220;
+  --surface-light: rgb(255 255 255 / 0.06);
+  --surface-dense: rgb(10 16 28 / 0.62);
+  --text-primary: #e6edf7;
+  --text-secondary: #8ea0b8;
+  --text-muted: #5b6b82;
+  --cyan: #22d3ee;
+  --blue: #3b82f6;
+  --violet: #8b5cf6;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #fb7185;
+  --force: #ff6b6b;
+  --velocity: #22d3ee;
+  --acceleration: #f472b6;
+  --electric: #fbbf24;
+  --magnetic: #a78bfa;
+  --torque: #34d399;
+  --momentum: #fb923c;
+  --energy: #a3e635;
+  --level-g12: #5eead4;
+  --level-y1: #60a5fa;
+  --level-y2: #818cf8;
+  --level-y3: #c084fc;
+  --level-y4: #f0abfc;
+
+  --radius-panel: 18px;
+  --radius-control: 9px;
+  --radius-pill: 999px;
+  --duration-fast: 160ms;
+  --duration-ui: 210ms;
+  --ease-ui: cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--ink);
+  color: var(--text-primary);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="tab"]:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--ink);
+  background: var(--cyan);
+}
+
+.math-variable {
+  font-family: "Geist", "Geist Variable", sans-serif;
+  font-style: italic;
+}
+
+.mono,
+output,
+.value-box,
+.equation-line,
+.equation-substitution,
+.equation-result strong,
+.elapsed-time,
+.speed-control select {
+  font-family: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
